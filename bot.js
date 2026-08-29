@@ -5,7 +5,7 @@ const express = require("express");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-const GROUP_ID = -1001234567890;
+const GROUP_ID = -1004425250477;
 
 // Telegram bot
 bot.start((ctx) => {
