@@ -1,10 +1,14 @@
 
 require("dotenv").config();
 
-const { Telegraf, Markup } = require("telegraf");
+const { Telegraf, Markup, session } = require("telegraf");
 const express = require("express");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
+
+// Session allows the bot to temporarily remember
+// the user's name, university, package, etc.
+bot.use(session());
 
 const GROUP_ID = -1004425250477; // YOUR PRIVATE GROUP ID
 
@@ -18,8 +22,7 @@ const mainKeyboard = Markup.keyboard([
     ["📚 Teaching Methods"],
     ["ℹ️ About Us"],
     ["📝 Registration"]
-])
-    .resize();
+]).resize();
 
 
 const registrationKeyboard = Markup.keyboard([
@@ -27,31 +30,35 @@ const registrationKeyboard = Markup.keyboard([
     ["🎓 COC Alone"],
     ["👨‍🎓 + 🎓 Freshman + COC"],
     ["🔙 Main Menu"]
-])
-    .resize();
+]).resize();
 
 
 const cocKeyboard = Markup.keyboard([
     ["💊 Medicine, Pharmacy & Dental"],
     ["⚖️ Law COC"],
     ["🔙 Registration"]
-])
-    .resize();
+]).resize();
 
 
 const freshmanCocKeyboard = Markup.keyboard([
     ["🏥 Freshman + Health COC"],
     ["⚖️ Freshman + Law COC"],
     ["🔙 Registration"]
-])
-    .resize();
+]).resize();
+
+
+const aboutKeyboard = Markup.keyboard([
+    ["🎥 ABOUT US🔥"],
+    ["🎥 Frequently Asking Questions"],
+    ["🎥 ADVICE and Warning"],
+    ["🔙 Main Menu"]
+]).resize();
 
 
 const paymentKeyboard = Markup.keyboard([
     ["📸 Send Payment Proof"],
     ["🔙 Registration"]
-])
-    .resize();
+]).resize();
 
 
 // ==================================================
@@ -59,6 +66,9 @@ const paymentKeyboard = Markup.keyboard([
 // ==================================================
 
 bot.start(async (ctx) => {
+
+    // Clear any old registration session
+    ctx.session.registration = null;
 
     const name = ctx.from.first_name || "there";
 
@@ -75,9 +85,27 @@ bot.start(async (ctx) => {
 // MAIN MENU
 // ==================================================
 
-// Golden Past Years
+
+// ------------------------------
+// GOLDEN PAST YEARS
+// ------------------------------
+
 bot.hears("🏆 Our Golden Past Years", async (ctx) => {
 
+    await ctx.reply(
+        `🏆 OUR GOLDEN PAST YEARS\n\n` +
+
+        `🙏🙏 A huge thank you to the best math teacher\n\n` +
+
+        `They say a good teacher explains, but a great teacher inspires. ` +
+        `Maths teacher helped me secure my A by breaking down the most ` +
+        `complex problems into simple steps.\n\n` +
+
+        `Thanks a lot all TTS teachers and members 🙏🙏\n\n` +
+
+        `⭐ Our students' success is our greatest achievement.`,
+        mainKeyboard
+    );
     await ctx.reply(
         `🏆 OUR GOLDEN PAST YEARS\n\n` +
 
@@ -95,7 +123,10 @@ bot.hears("🏆 Our Golden Past Years", async (ctx) => {
 });
 
 
-// Teaching Methods
+// ------------------------------
+// TEACHING METHODS
+// ------------------------------
+
 bot.hears("📚 Teaching Methods", async (ctx) => {
 
     await ctx.reply(
@@ -117,25 +148,17 @@ bot.hears("📚 Teaching Methods", async (ctx) => {
 });
 
 
-// About Us
+// ==================================================
+// ABOUT US
+// ==================================================
+
 bot.hears("ℹ️ About Us", async (ctx) => {
 
     await ctx.reply(
         `ℹ️ ABOUT US\n\n` +
         `Learn more about TTS Academy through our videos. 🎥\n\n` +
-        `Choose a video:`
-    );
-
-    // About Us video buttons
-    await ctx.reply(
-        `🎥 Select a video:`,
-        Markup.keyboard([
-            ["🎥ABOUT US🔥"],
-            ["🎥 Frequently Asking Questions"],
-            ["🎥 ADVICE and Warning"],
-            ["🔙 Main Menu"]
-        ])
-            .resize()
+        `Choose a video below:`,
+        aboutKeyboard
     );
 });
 
@@ -144,31 +167,32 @@ bot.hears("ℹ️ About Us", async (ctx) => {
 // ABOUT US VIDEOS
 // ==================================================
 
-bot.hears("🎥 About TTS - Video 1", async (ctx) => {
 
-    // Replace with your real Telegram video file ID
+// ------------------------------
+// VIDEO 1
+// ------------------------------
+
+bot.hears("🎥 ABOUT US🔥", async (ctx) => {
 
     await ctx.replyWithVideo(
         "BAACAgQAAxkBAANEapNeMpVDrJnxAsBPvNUvDxEVug8AAqsgAAJI86BQAgbmkcAcsXE9BA",
         {
-            caption: "🎥ABOUT US🔥"
+            caption: "🎥 ABOUT US🔥"
         }
     );
 
     await ctx.reply(
-        "Choose another option:",
-        Markup.keyboard([
-            ["🎥ABOUT US🔥"],
-            ["🎥 Frequently Asking Questions"],
-            ["🎥 ADVICE and Warning"],
-            ["🔙 Main Menu"]
-        ])
-            .resize()
+        `Choose another video:`,
+        aboutKeyboard
     );
 });
 
 
-bot.hears("🎥 About TTS - Video 2", async (ctx) => {
+// ------------------------------
+// VIDEO 2
+// ------------------------------
+
+bot.hears("🎥 Frequently Asking Questions", async (ctx) => {
 
     await ctx.replyWithVideo(
         "BAACAgQAAxkBAANHapNguArQEkcwGL2zgus-Uar2uvQAAtYgAAJI86BQVZ0mmY-GqAE9BA",
@@ -178,19 +202,17 @@ bot.hears("🎥 About TTS - Video 2", async (ctx) => {
     );
 
     await ctx.reply(
-        "Choose another option:",
-        Markup.keyboard([
-            ["🎥ABOUT US🔥"],
-            ["🎥 Frequently Asking Questions"],
-            ["🎥 ADVICE and Warning"],
-            ["🔙 Main Menu"]
-        ])
-            .resize()
+        `Choose another video:`,
+        aboutKeyboard
     );
 });
 
 
-bot.hears("🎥 About TTS - Video 3", async (ctx) => {
+// ------------------------------
+// VIDEO 3
+// ------------------------------
+
+bot.hears("🎥 ADVICE and Warning", async (ctx) => {
 
     await ctx.replyWithVideo(
         "BAACAgQAAxkBAANJapNhL_KoDfWXzkyxe2XKEKEGHQMAAuIgAAJI86BQC5kfkcGqYgABPQQ",
@@ -200,14 +222,8 @@ bot.hears("🎥 About TTS - Video 3", async (ctx) => {
     );
 
     await ctx.reply(
-        "Choose another option:",
-        Markup.keyboard([
-            ["🎥ABOUT US🔥"],
-            ["🎥 Frequently Asking Questions"],
-            ["🎥 ADVICE and Warning"],
-            ["🔙 Main Menu"]
-        ])
-            .resize()
+        `Choose another video:`,
+        aboutKeyboard
     );
 });
 
@@ -217,6 +233,9 @@ bot.hears("🎥 About TTS - Video 3", async (ctx) => {
 // ==================================================
 
 bot.hears("📝 Registration", async (ctx) => {
+
+    // Clear any unfinished registration
+    ctx.session.registration = null;
 
     await ctx.reply(
         `📝 REGISTRATION\n\n` +
@@ -231,6 +250,12 @@ bot.hears("📝 Registration", async (ctx) => {
 // ==================================================
 
 bot.hears("👨‍🎓 Freshman Alone", async (ctx) => {
+
+    // Remember the package
+    ctx.session.registration = {
+        package: "Freshman Alone",
+        fee: "400 ETB"
+    };
 
     await ctx.reply(
         `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
@@ -247,7 +272,7 @@ bot.hears("👨‍🎓 Freshman Alone", async (ctx) => {
 
         `1. Pay 400 ETB via CBE or Telebirr.\n\n` +
         `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot HERE in this bot.\n\n` +
+        `3. Press "📸 Send Payment Proof" below.\n\n` +
 
         `💰 Fee: 400 ETB`,
         paymentKeyboard
@@ -260,6 +285,9 @@ bot.hears("👨‍🎓 Freshman Alone", async (ctx) => {
 // ==================================================
 
 bot.hears("🎓 COC Alone", async (ctx) => {
+
+    // Clear old package selection
+    ctx.session.registration = null;
 
     await ctx.reply(
         `🎓 COC ALONE\n\n` +
@@ -274,6 +302,11 @@ bot.hears("🎓 COC Alone", async (ctx) => {
 // ==================================================
 
 bot.hears("💊 Medicine, Pharmacy & Dental", async (ctx) => {
+
+    ctx.session.registration = {
+        package: "COC - Medicine, Pharmacy & Dental",
+        fee: "350 ETB"
+    };
 
     await ctx.reply(
         `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
@@ -290,7 +323,7 @@ bot.hears("💊 Medicine, Pharmacy & Dental", async (ctx) => {
 
         `1. Pay 350 ETB via CBE or Telebirr.\n\n` +
         `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot HERE in this bot.\n\n` +
+        `3. Press "📸 Send Payment Proof" below.\n\n` +
 
         `💰 Fee: 350 ETB`,
         paymentKeyboard
@@ -303,6 +336,11 @@ bot.hears("💊 Medicine, Pharmacy & Dental", async (ctx) => {
 // ==================================================
 
 bot.hears("⚖️ Law COC", async (ctx) => {
+
+    ctx.session.registration = {
+        package: "COC - Law",
+        fee: "300 ETB"
+    };
 
     await ctx.reply(
         `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
@@ -318,10 +356,8 @@ bot.hears("⚖️ Law COC", async (ctx) => {
         `📲 How to Complete Registration:\n\n` +
 
         `1. Pay 300 ETB via CBE or Telebirr.\n\n` +
-
         `2. Take a screenshot of the payment receipt.\n\n` +
-
-        `3. Send the screenshot HERE in this bot.\n\n` +
+        `3. Press "📸 Send Payment Proof" below.\n\n` +
 
         `💰 Fee: 300 ETB`,
         paymentKeyboard
@@ -334,6 +370,8 @@ bot.hears("⚖️ Law COC", async (ctx) => {
 // ==================================================
 
 bot.hears("👨‍🎓 + 🎓 Freshman + COC", async (ctx) => {
+
+    ctx.session.registration = null;
 
     await ctx.reply(
         `👨‍🎓 + 🎓 FRESHMAN + COC\n\n` +
@@ -349,6 +387,11 @@ bot.hears("👨‍🎓 + 🎓 Freshman + COC", async (ctx) => {
 
 bot.hears("🏥 Freshman + Health COC", async (ctx) => {
 
+    ctx.session.registration = {
+        package: "Freshman + Health COC",
+        fee: "700 ETB"
+    };
+
     await ctx.reply(
         `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
 
@@ -363,10 +406,8 @@ bot.hears("🏥 Freshman + Health COC", async (ctx) => {
         `📲 How to Complete Registration:\n\n` +
 
         `1. Pay 700 ETB via CBE or Telebirr.\n\n` +
-
         `2. Take a screenshot of the payment receipt.\n\n` +
-
-        `3. Send the screenshot HERE in this bot.\n\n` +
+        `3. Press "📸 Send Payment Proof" below.\n\n` +
 
         `💰 Fee: 700 ETB`,
         paymentKeyboard
@@ -379,6 +420,11 @@ bot.hears("🏥 Freshman + Health COC", async (ctx) => {
 // ==================================================
 
 bot.hears("⚖️ Freshman + Law COC", async (ctx) => {
+
+    ctx.session.registration = {
+        package: "Freshman + Law COC",
+        fee: "600 ETB"
+    };
 
     await ctx.reply(
         `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
@@ -394,10 +440,8 @@ bot.hears("⚖️ Freshman + Law COC", async (ctx) => {
         `📲 How to Complete Registration:\n\n` +
 
         `1. Pay 600 ETB via CBE or Telebirr.\n\n` +
-
         `2. Take a screenshot of the payment receipt.\n\n` +
-
-        `3. Send the screenshot HERE in this bot.\n\n` +
+        `3. Press "📸 Send Payment Proof" below.\n\n` +
 
         `💰 Fee: 600 ETB`,
         paymentKeyboard
@@ -406,16 +450,120 @@ bot.hears("⚖️ Freshman + Law COC", async (ctx) => {
 
 
 // ==================================================
-// SEND PAYMENT PROOF BUTTON
+// START PAYMENT PROOF PROCESS
 // ==================================================
 
 bot.hears("📸 Send Payment Proof", async (ctx) => {
 
+    // Make sure the user selected a package
+    if (!ctx.session.registration) {
+
+        await ctx.reply(
+            `❌ Please select your registration package first.\n\n` +
+            `Go to 📝 Registration and choose your program.`,
+            registrationKeyboard
+        );
+
+        return;
+    }
+
+    // Save the current step
+    ctx.session.registration.step = "name";
+
     await ctx.reply(
-        `📸 PAYMENT PROOF\n\n` +
-        `Please send your payment screenshot here.\n\n` +
-        `Make sure the receipt is clear and readable.`
+        `👤 Please enter your FULL NAME:`
     );
+});
+
+
+// ==================================================
+// COLLECT FULL NAME + UNIVERSITY
+// ==================================================
+
+bot.on("text", async (ctx, next) => {
+
+    const registration = ctx.session?.registration;
+
+    // If user isn't currently registering,
+    // let the other bot.hears() handlers process the message.
+    if (!registration) {
+        return next();
+    }
+
+
+    // ==================================================
+    // STEP 1: FULL NAME
+    // ==================================================
+
+    if (registration.step === "name") {
+
+        const fullName = ctx.message.text.trim();
+
+        if (!fullName) {
+
+            await ctx.reply(
+                `❌ Please enter your full name.`
+            );
+
+            return;
+        }
+
+        registration.fullName = fullName;
+        registration.step = "university";
+
+        await ctx.reply(
+            `🎓 Thanks!\n\n` +
+            `Now enter your UNIVERSITY name:`
+        );
+
+        return;
+    }
+
+
+    // ==================================================
+    // STEP 2: UNIVERSITY
+    // ==================================================
+
+    if (registration.step === "university") {
+
+        const university = ctx.message.text.trim();
+
+        if (!university) {
+
+            await ctx.reply(
+                `❌ Please enter your university name.`
+            );
+
+            return;
+        }
+
+        registration.university = university;
+        registration.step = "photo";
+
+        await ctx.reply(
+            `✅ Information received!\n\n` +
+            `📸 Now send your PAYMENT SCREENSHOT.\n\n` +
+            `Make sure the receipt is clear and readable.`
+        );
+
+        return;
+    }
+
+
+    // ==================================================
+    // STEP 3: WAITING FOR PHOTO
+    // ==================================================
+
+    if (registration.step === "photo") {
+
+        await ctx.reply(
+            `📸 Please send your payment screenshot as an image.`
+        );
+
+        return;
+    }
+
+    return next();
 });
 
 
@@ -427,28 +575,83 @@ bot.on("photo", async (ctx) => {
 
     try {
 
+        // Make sure user started payment registration
+        if (!ctx.session?.registration) {
+
+            await ctx.reply(
+                `Please select your registration package first from 📝 Registration.`,
+                registrationKeyboard
+            );
+
+            return;
+        }
+
+        const registration = ctx.session.registration;
+
+
+        // Make sure name and university exist
+        if (
+            !registration.fullName ||
+            !registration.university
+        ) {
+
+            await ctx.reply(
+                `❌ Please complete your Full Name and University information first.`
+            );
+
+            return;
+        }
+
+
+        // ==================================================
+        // USER TELEGRAM INFORMATION
+        // ==================================================
+
         const user = ctx.from;
 
-        const name = user.first_name || "Unknown";
+        const telegramName =
+            user.first_name || "Unknown";
 
-        const username = user.username
-            ? `@${user.username}`
-            : "No username";
+        const username =
+            user.username
+                ? `@${user.username}`
+                : "No username";
 
         const userId = user.id;
 
+
+        // ==================================================
+        // GET HIGHEST QUALITY PHOTO
+        // ==================================================
+
         const photos = ctx.message.photo;
 
-        const fileId = photos[photos.length - 1].file_id;
+        const fileId =
+            photos[photos.length - 1].file_id;
+
+
+        // ==================================================
+        // GROUP MESSAGE
+        // ==================================================
 
         const caption =
             `💳 PAYMENT PROOF\n\n` +
-            `👤 Name: ${name}\n` +
-            `📱 Username: ${username}\n` +
-            `🆔 User ID: ${userId}`;
 
-        // Send image + user information
-        // to private group
+            `📦 Package: ${registration.package}\n` +
+            `💰 Fee: ${registration.fee}\n\n` +
+
+            `👤 Full Name: ${registration.fullName}\n` +
+            `🎓 University: ${registration.university}\n\n` +
+
+            `📱 Telegram Name: ${telegramName}\n` +
+            `🔗 Username: ${username}\n` +
+            `🆔 Telegram ID: ${userId}`;
+
+
+        // ==================================================
+        // SEND PHOTO TO PRIVATE GROUP
+        // ==================================================
+
         await ctx.telegram.sendPhoto(
             GROUP_ID,
             fileId,
@@ -457,9 +660,23 @@ bot.on("photo", async (ctx) => {
             }
         );
 
-        // Confirm to user
+
+        // ==================================================
+        // CLEAR REGISTRATION DATA
+        // ==================================================
+
+        ctx.session.registration = null;
+
+
+        // ==================================================
+        // CONFIRM TO USER
+        // ==================================================
+
         await ctx.reply(
             `✅ Payment proof received!\n\n` +
+
+            `Thank you, ${registration.fullName}.\n\n` +
+
             `We will accept you after we verify your payment.`,
             mainKeyboard
         );
@@ -480,7 +697,14 @@ bot.on("photo", async (ctx) => {
 // NAVIGATION
 // ==================================================
 
+
+// ------------------------------
+// MAIN MENU
+// ------------------------------
+
 bot.hears("🔙 Main Menu", async (ctx) => {
+
+    ctx.session.registration = null;
 
     await ctx.reply(
         `🏠 MAIN MENU\n\n` +
@@ -490,7 +714,13 @@ bot.hears("🔙 Main Menu", async (ctx) => {
 });
 
 
+// ------------------------------
+// REGISTRATION
+// ------------------------------
+
 bot.hears("🔙 Registration", async (ctx) => {
+
+    ctx.session.registration = null;
 
     await ctx.reply(
         `📝 REGISTRATION\n\n` +
@@ -507,13 +737,19 @@ bot.hears("🔙 Registration", async (ctx) => {
 const app = express();
 
 app.get("/", (req, res) => {
-    res.send("TTS Academy Bot is running!");
+
+    res.send("TTS Academy Bot is running! 🤖");
+
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`🌐 Server running on port ${PORT}`);
+
+    console.log(
+        `🌐 Server running on port ${PORT}`
+    );
+
 });
 
 
@@ -523,5 +759,16 @@ app.listen(PORT, () => {
 
 bot.launch();
 
-console.log("🤖 TTS Academy Bot is running!");
+console.log(
+    "🤖 TTS Academy Bot is running!"
+);
+
+
+// ==================================================
+// GRACEFUL STOP
+// ==================================================
+
+process.once("SIGINT", () => bot.stop("SIGINT"));
+
+process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
