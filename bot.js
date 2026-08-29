@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 
 const { Telegraf, Markup } = require("telegraf");
@@ -8,90 +9,99 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const GROUP_ID = -1004425250477; // YOUR PRIVATE GROUP ID
 
 
-// =========================
-// MAIN MENU
-// =========================
+// ==================================================
+// KEYBOARDS
+// ==================================================
 
-function mainMenu() {
-    return Markup.inlineKeyboard([
-        [
-            Markup.button.callback("🏆 Our Golden Past Years", "golden"),
-        ],
-        [
-            Markup.button.callback("📚 Teaching Methods", "teaching"),
-        ],
-        [
-            Markup.button.callback("ℹ️ About Us", "about"),
-        ],
-        [
-            Markup.button.callback("📝 Registration", "registration"),
-        ],
-    ]);
-}
+const mainKeyboard = Markup.keyboard([
+    ["🏆 Our Golden Past Years"],
+    ["📚 Teaching Methods"],
+    ["ℹ️ About Us"],
+    ["📝 Registration"]
+])
+    .resize();
 
 
-// =========================
-// /START
-// =========================
+const registrationKeyboard = Markup.keyboard([
+    ["👨‍🎓 Freshman Alone"],
+    ["🎓 COC Alone"],
+    ["👨‍🎓 + 🎓 Freshman + COC"],
+    ["🔙 Main Menu"]
+])
+    .resize();
+
+
+const cocKeyboard = Markup.keyboard([
+    ["💊 Medicine, Pharmacy & Dental"],
+    ["⚖️ Law COC"],
+    ["🔙 Registration"]
+])
+    .resize();
+
+
+const freshmanCocKeyboard = Markup.keyboard([
+    ["🏥 Freshman + Health COC"],
+    ["⚖️ Freshman + Law COC"],
+    ["🔙 Registration"]
+])
+    .resize();
+
+
+const paymentKeyboard = Markup.keyboard([
+    ["📸 Send Payment Proof"],
+    ["🔙 Registration"]
+])
+    .resize();
+
+
+// ==================================================
+// START
+// ==================================================
 
 bot.start(async (ctx) => {
+
     const name = ctx.from.first_name || "there";
 
     await ctx.reply(
         `Hey ${name} 👋\n\n` +
         `Welcome to TTS Academy! 🎓\n\n` +
         `Please choose an option below:`,
-        mainMenu()
+        mainKeyboard
     );
 });
 
 
-// =========================
-// GOLDEN PAST YEARS
-// =========================
+// ==================================================
+// MAIN MENU
+// ==================================================
 
-bot.action("golden", async (ctx) => {
+// Golden Past Years
+bot.hears("🏆 Our Golden Past Years", async (ctx) => {
 
-    await ctx.answerCbQuery();
+    await ctx.reply(
+        `🏆 OUR GOLDEN PAST YEARS\n\n` +
 
-    await ctx.editMessageText(
-        `🏆 *OUR GOLDEN PAST YEARS*\n\n` +
-
-        `🙏🙏 *A huge thank you to the best math teacher*\n\n` +
+        `🙏🙏 A huge thank you to the best math teacher\n\n` +
 
         `They say a good teacher explains, but a great teacher inspires. ` +
-        `Maths teacher helped me secure my *A* by breaking down the most ` +
+        `Maths teacher helped me secure my A by breaking down the most ` +
         `complex problems into simple steps.\n\n` +
 
         `Thanks a lot all TTS teachers and members 🙏🙏\n\n` +
 
-        `━━━━━━━━━━━━━━\n\n` +
-
-        `⭐ *Our students' success is our greatest achievement.*\n\n` +
-
-        `━━━━━━━━━━━━━━`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [Markup.button.callback("🔙 Main Menu", "main")]
-            ])
-        }
+        `⭐ Our students' success is our greatest achievement.`,
+        mainKeyboard
     );
 });
 
 
-// =========================
-// TEACHING METHODS
-// =========================
+// Teaching Methods
+bot.hears("📚 Teaching Methods", async (ctx) => {
 
-bot.action("teaching", async (ctx) => {
+    await ctx.reply(
+        `📱 HOW WILL YOU LEARN?\n\n` +
 
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `📱 *HOW WILL YOU LEARN?*\n\n` +
-
-        `Everything is delivered on *Telegram* and on *Application!* 🎓\n\n` +
+        `Everything is delivered on Telegram and on Application! 🎓\n\n` +
 
         `You get:\n\n` +
 
@@ -102,50 +112,41 @@ bot.action("teaching", async (ctx) => {
         `📝 Daily MCQs & Weekly Mock Tests!\n\n` +
 
         `> Own Mid and Final Exam preparation with a complete learning system. 💪📚`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [Markup.button.callback("🔙 Main Menu", "main")]
-            ])
-        }
+        mainKeyboard
     );
 });
 
 
-// =========================
-// ABOUT US
-// =========================
+// About Us
+bot.hears("ℹ️ About Us", async (ctx) => {
 
-bot.action("about", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `ℹ️ *ABOUT US*\n\n` +
+    await ctx.reply(
+        `ℹ️ ABOUT US\n\n` +
         `Learn more about TTS Academy through our videos. 🎥\n\n` +
-        `Choose a video below:`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [Markup.button.callback("🎥 About TTS - Video 1", "video1")],
-                [Markup.button.callback("🎥 About TTS - Video 2", "video2")],
-                [Markup.button.callback("🎥 About TTS - Video 3", "video3")],
-                [Markup.button.callback("🔙 Main Menu", "main")]
-            ])
-        }
+        `Choose a video:`
+    );
+
+    // About Us video buttons
+    await ctx.reply(
+        `🎥 Select a video:`,
+        Markup.keyboard([
+            ["🎥 About TTS - Video 1"],
+            ["🎥 About TTS - Video 2"],
+            ["🎥 About TTS - Video 3"],
+            ["🔙 Main Menu"]
+        ])
+            .resize()
     );
 });
 
 
-// =========================
+// ==================================================
 // ABOUT US VIDEOS
-// =========================
+// ==================================================
 
-// Replace the placeholders with your actual Telegram video file IDs.
+bot.hears("🎥 About TTS - Video 1", async (ctx) => {
 
-bot.action("video1", async (ctx) => {
-
-    await ctx.answerCbQuery();
+    // Replace with your real Telegram video file ID
 
     await ctx.replyWithVideo(
         "VIDEO_FILE_ID_1",
@@ -153,11 +154,21 @@ bot.action("video1", async (ctx) => {
             caption: "🎥 About TTS Academy"
         }
     );
+
+    await ctx.reply(
+        "Choose another option:",
+        Markup.keyboard([
+            ["🎥 About TTS - Video 1"],
+            ["🎥 About TTS - Video 2"],
+            ["🎥 About TTS - Video 3"],
+            ["🔙 Main Menu"]
+        ])
+            .resize()
+    );
 });
 
-bot.action("video2", async (ctx) => {
 
-    await ctx.answerCbQuery();
+bot.hears("🎥 About TTS - Video 2", async (ctx) => {
 
     await ctx.replyWithVideo(
         "VIDEO_FILE_ID_2",
@@ -165,11 +176,21 @@ bot.action("video2", async (ctx) => {
             caption: "🎥 About TTS Academy"
         }
     );
+
+    await ctx.reply(
+        "Choose another option:",
+        Markup.keyboard([
+            ["🎥 About TTS - Video 1"],
+            ["🎥 About TTS - Video 2"],
+            ["🎥 About TTS - Video 3"],
+            ["🔙 Main Menu"]
+        ])
+            .resize()
+    );
 });
 
-bot.action("video3", async (ctx) => {
 
-    await ctx.answerCbQuery();
+bot.hears("🎥 About TTS - Video 3", async (ctx) => {
 
     await ctx.replyWithVideo(
         "VIDEO_FILE_ID_3",
@@ -177,383 +198,230 @@ bot.action("video3", async (ctx) => {
             caption: "🎥 About TTS Academy"
         }
     );
-});
-
-
-// =========================
-// REGISTRATION MAIN MENU
-// =========================
-
-bot.action("registration", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `📝 *REGISTRATION*\n\n` +
-        `Please choose your program:`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "👨‍🎓 Freshman Alone",
-                        "freshman_alone"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🎓 COC Alone",
-                        "coc_alone"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "👨‍🎓 + 🎓 Freshman + COC",
-                        "freshman_coc"
-                    )
-                ],
-                [
-                    Markup.button.callback("🔙 Main Menu", "main")
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// FRESHMAN ALONE
-// =========================
-
-bot.action("freshman_alone", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `💳 *REGISTRATION & PAYMENT DETAILS*\n\n` +
-
-        `🏦 *Payment Options*\n\n` +
-
-        `*CBE:* @1000553069387\n` +
-        `Holder: Melkamu Godebo\n\n` +
-
-        `*Telebirr:* +251958738409\n` +
-        `Account Holder Name: Melkamu Godebo\n\n` +
-
-        `📲 *How to Complete Registration:*\n\n` +
-
-        `1. Pay *400 ETB* via CBE or Telebirr.\n\n` +
-        `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot *HERE in this bot*.\n\n` +
-
-        `💰 *Fee: 400 ETB*`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "📸 Send Payment Proof",
-                        "payment"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 Registration",
-                        "registration"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// COC ALONE
-// =========================
-
-bot.action("coc_alone", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `🎓 *COC ALONE*\n\n` +
-        `Choose your field:`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "💊 Medicine, Pharmacy & Dental",
-                        "coc_health"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "⚖️ Law COC",
-                        "coc_law"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 Registration",
-                        "registration"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// COC HEALTH
-// =========================
-
-bot.action("coc_health", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `💳 *REGISTRATION & PAYMENT DETAILS*\n\n` +
-
-        `🏦 *Payment Options*\n\n` +
-
-        `*CBE:* @1000553069387\n` +
-        `Holder: Melkamu Godebo\n\n` +
-
-        `*Telebirr:* +251958738409\n` +
-        `Account Holder Name: Melkamu Godebo\n\n` +
-
-        `📲 *How to Complete Registration:*\n\n` +
-
-        `1. Pay *350 ETB* via CBE or Telebirr.\n\n` +
-        `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot *HERE in this bot*.\n\n` +
-
-        `💰 *Fee: 350 ETB*`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "📸 Send Payment Proof",
-                        "payment"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 COC Alone",
-                        "coc_alone"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// COC LAW
-// =========================
-
-bot.action("coc_law", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `💳 *REGISTRATION & PAYMENT DETAILS*\n\n` +
-
-        `🏦 *Payment Options*\n\n` +
-
-        `*CBE:* @1000553069387\n` +
-        `Holder: Melkamu Godebo\n\n` +
-
-        `*Telebirr:* +251958738409\n` +
-        `Account Holder Name: Melkamu Godebo\n\n` +
-
-        `📲 *How to Complete Registration:*\n\n` +
-
-        `1. Pay *300 ETB* via CBE or Telebirr.\n\n` +
-        `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot *HERE in this bot*.\n\n` +
-
-        `💰 *Fee: 300 ETB*`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "📸 Send Payment Proof",
-                        "payment"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 COC Alone",
-                        "coc_alone"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// FRESHMAN + COC
-// =========================
-
-bot.action("freshman_coc", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `👨‍🎓 + 🎓 *FRESHMAN + COC*\n\n` +
-        `Choose your program:`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "🏥 Freshman + Health COC",
-                        "freshman_health"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "⚖️ Freshman + Law COC",
-                        "freshman_law"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 Registration",
-                        "registration"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// FRESHMAN + HEALTH
-// =========================
-
-bot.action("freshman_health", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `💳 *REGISTRATION & PAYMENT DETAILS*\n\n` +
-
-        `🏦 *Payment Options*\n\n` +
-
-        `*CBE:* @1000553069387\n` +
-        `Holder: Melkamu Godebo\n\n` +
-
-        `*Telebirr:* +251958738409\n` +
-        `Account Holder Name: Melkamu Godebo\n\n` +
-
-        `📲 *How to Complete Registration:*\n\n` +
-
-        `1. Pay *700 ETB* via CBE or Telebirr.\n\n` +
-        `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot *HERE in this bot*.\n\n` +
-
-        `💰 *Fee: 700 ETB*`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "📸 Send Payment Proof",
-                        "payment"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 Freshman + COC",
-                        "freshman_coc"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// FRESHMAN + LAW
-// =========================
-
-bot.action("freshman_law", async (ctx) => {
-
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `💳 *REGISTRATION & PAYMENT DETAILS*\n\n` +
-
-        `🏦 *Payment Options*\n\n` +
-
-        `*CBE:* @1000553069387\n` +
-        `Holder: Melkamu Godebo\n\n` +
-
-        `*Telebirr:* +251958738409\n` +
-        `Account Holder Name: Melkamu Godebo\n\n` +
-
-        `📲 *How to Complete Registration:*\n\n` +
-
-        `1. Pay *600 ETB* via CBE or Telebirr.\n\n` +
-        `2. Take a screenshot of the payment receipt.\n\n` +
-        `3. Send the screenshot *HERE in this bot*.\n\n` +
-
-        `💰 *Fee: 600 ETB*`,
-        {
-            parse_mode: "Markdown",
-            ...Markup.inlineKeyboard([
-                [
-                    Markup.button.callback(
-                        "📸 Send Payment Proof",
-                        "payment"
-                    )
-                ],
-                [
-                    Markup.button.callback(
-                        "🔙 Freshman + COC",
-                        "freshman_coc"
-                    )
-                ]
-            ])
-        }
-    );
-});
-
-
-// =========================
-// PAYMENT
-// =========================
-
-bot.action("payment", async (ctx) => {
-
-    await ctx.answerCbQuery();
 
     await ctx.reply(
-        `📸 *Payment Proof*\n\n` +
-        `Please send your payment screenshot here.\n\n` +
-        `Make sure the receipt is clear and readable.`,
-        {
-            parse_mode: "Markdown"
-        }
+        "Choose another option:",
+        Markup.keyboard([
+            ["🎥 About TTS - Video 1"],
+            ["🎥 About TTS - Video 2"],
+            ["🎥 About TTS - Video 3"],
+            ["🔙 Main Menu"]
+        ])
+            .resize()
     );
 });
 
 
-// =========================
+// ==================================================
+// REGISTRATION
+// ==================================================
+
+bot.hears("📝 Registration", async (ctx) => {
+
+    await ctx.reply(
+        `📝 REGISTRATION\n\n` +
+        `Please choose your program:`,
+        registrationKeyboard
+    );
+});
+
+
+// ==================================================
+// FRESHMAN ALONE
+// ==================================================
+
+bot.hears("👨‍🎓 Freshman Alone", async (ctx) => {
+
+    await ctx.reply(
+        `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
+
+        `🏦 Payment Options\n\n` +
+
+        `CBE: @1000553069387\n` +
+        `Holder: Melkamu Godebo\n\n` +
+
+        `Telebirr: +251958738409\n` +
+        `Account Holder Name: Melkamu Godebo\n\n` +
+
+        `📲 How to Complete Registration:\n\n` +
+
+        `1. Pay 400 ETB via CBE or Telebirr.\n\n` +
+        `2. Take a screenshot of the payment receipt.\n\n` +
+        `3. Send the screenshot HERE in this bot.\n\n` +
+
+        `💰 Fee: 400 ETB`,
+        paymentKeyboard
+    );
+});
+
+
+// ==================================================
+// COC ALONE
+// ==================================================
+
+bot.hears("🎓 COC Alone", async (ctx) => {
+
+    await ctx.reply(
+        `🎓 COC ALONE\n\n` +
+        `Choose your field:`,
+        cocKeyboard
+    );
+});
+
+
+// ==================================================
+// COC HEALTH
+// ==================================================
+
+bot.hears("💊 Medicine, Pharmacy & Dental", async (ctx) => {
+
+    await ctx.reply(
+        `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
+
+        `🏦 Payment Options\n\n` +
+
+        `CBE: @1000553069387\n` +
+        `Holder: Melkamu Godebo\n\n` +
+
+        `Telebirr: +251958738409\n` +
+        `Account Holder Name: Melkamu Godebo\n\n` +
+
+        `📲 How to Complete Registration:\n\n` +
+
+        `1. Pay 350 ETB via CBE or Telebirr.\n\n` +
+        `2. Take a screenshot of the payment receipt.\n\n` +
+        `3. Send the screenshot HERE in this bot.\n\n` +
+
+        `💰 Fee: 350 ETB`,
+        paymentKeyboard
+    );
+});
+
+
+// ==================================================
+// COC LAW
+// ==================================================
+
+bot.hears("⚖️ Law COC", async (ctx) => {
+
+    await ctx.reply(
+        `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
+
+        `🏦 Payment Options\n\n` +
+
+        `CBE: @1000553069387\n` +
+        `Holder: Melkamu Godebo\n\n` +
+
+        `Telebirr: +251958738409\n` +
+        `Account Holder Name: Melkamu Godebo\n\n` +
+
+        `📲 How to Complete Registration:\n\n` +
+
+        `1. Pay 300 ETB via CBE or Telebirr.\n\n` +
+
+        `2. Take a screenshot of the payment receipt.\n\n` +
+
+        `3. Send the screenshot HERE in this bot.\n\n` +
+
+        `💰 Fee: 300 ETB`,
+        paymentKeyboard
+    );
+});
+
+
+// ==================================================
+// FRESHMAN + COC
+// ==================================================
+
+bot.hears("👨‍🎓 + 🎓 Freshman + COC", async (ctx) => {
+
+    await ctx.reply(
+        `👨‍🎓 + 🎓 FRESHMAN + COC\n\n` +
+        `Choose your program:`,
+        freshmanCocKeyboard
+    );
+});
+
+
+// ==================================================
+// FRESHMAN + HEALTH COC
+// ==================================================
+
+bot.hears("🏥 Freshman + Health COC", async (ctx) => {
+
+    await ctx.reply(
+        `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
+
+        `🏦 Payment Options\n\n` +
+
+        `CBE: @1000553069387\n` +
+        `Holder: Melkamu Godebo\n\n` +
+
+        `Telebirr: +251958738409\n` +
+        `Account Holder Name: Melkamu Godebo\n\n` +
+
+        `📲 How to Complete Registration:\n\n` +
+
+        `1. Pay 700 ETB via CBE or Telebirr.\n\n` +
+
+        `2. Take a screenshot of the payment receipt.\n\n` +
+
+        `3. Send the screenshot HERE in this bot.\n\n` +
+
+        `💰 Fee: 700 ETB`,
+        paymentKeyboard
+    );
+});
+
+
+// ==================================================
+// FRESHMAN + LAW COC
+// ==================================================
+
+bot.hears("⚖️ Freshman + Law COC", async (ctx) => {
+
+    await ctx.reply(
+        `💳 REGISTRATION & PAYMENT DETAILS\n\n` +
+
+        `🏦 Payment Options\n\n` +
+
+        `CBE: @1000553069387\n` +
+        `Holder: Melkamu Godebo\n\n` +
+
+        `Telebirr: +251958738409\n` +
+        `Account Holder Name: Melkamu Godebo\n\n` +
+
+        `📲 How to Complete Registration:\n\n` +
+
+        `1. Pay 600 ETB via CBE or Telebirr.\n\n` +
+
+        `2. Take a screenshot of the payment receipt.\n\n` +
+
+        `3. Send the screenshot HERE in this bot.\n\n` +
+
+        `💰 Fee: 600 ETB`,
+        paymentKeyboard
+    );
+});
+
+
+// ==================================================
+// SEND PAYMENT PROOF BUTTON
+// ==================================================
+
+bot.hears("📸 Send Payment Proof", async (ctx) => {
+
+    await ctx.reply(
+        `📸 PAYMENT PROOF\n\n` +
+        `Please send your payment screenshot here.\n\n` +
+        `Make sure the receipt is clear and readable.`
+    );
+});
+
+
+// ==================================================
 // RECEIVE PAYMENT SCREENSHOT
-// =========================
+// ==================================================
 
 bot.on("photo", async (ctx) => {
 
@@ -579,8 +447,8 @@ bot.on("photo", async (ctx) => {
             `📱 Username: ${username}\n` +
             `🆔 User ID: ${userId}`;
 
-        // Send screenshot + sender information
-        // to the private group
+        // Send image + user information
+        // to private group
         await ctx.telegram.sendPhoto(
             GROUP_ID,
             fileId,
@@ -589,10 +457,11 @@ bot.on("photo", async (ctx) => {
             }
         );
 
-        // Tell user
+        // Confirm to user
         await ctx.reply(
             `✅ Payment proof received!\n\n` +
-            `We will accept you after we verify your payment.`
+            `We will accept you after we verify your payment.`,
+            mainKeyboard
         );
 
     } catch (error) {
@@ -607,28 +476,33 @@ bot.on("photo", async (ctx) => {
 });
 
 
-// =========================
-// MAIN MENU BUTTON
-// =========================
+// ==================================================
+// NAVIGATION
+// ==================================================
 
-bot.action("main", async (ctx) => {
+bot.hears("🔙 Main Menu", async (ctx) => {
 
-    await ctx.answerCbQuery();
-
-    await ctx.editMessageText(
-        `🏠 *MAIN MENU*\n\n` +
-        `Welcome back! Choose an option:`,
-        {
-            parse_mode: "Markdown",
-            ...mainMenu()
-        }
+    await ctx.reply(
+        `🏠 MAIN MENU\n\n` +
+        `Choose an option:`,
+        mainKeyboard
     );
 });
 
 
-// =========================
+bot.hears("🔙 Registration", async (ctx) => {
+
+    await ctx.reply(
+        `📝 REGISTRATION\n\n` +
+        `Please choose your program:`,
+        registrationKeyboard
+    );
+});
+
+
+// ==================================================
 // EXPRESS SERVER FOR RENDER
-// =========================
+// ==================================================
 
 const app = express();
 
@@ -643,10 +517,11 @@ app.listen(PORT, () => {
 });
 
 
-// =========================
+// ==================================================
 // START BOT
-// =========================
+// ==================================================
 
 bot.launch();
 
 console.log("🤖 TTS Academy Bot is running!");
+
