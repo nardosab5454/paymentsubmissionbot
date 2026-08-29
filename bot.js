@@ -130,9 +130,9 @@ bot.hears("ℹ️ About Us", async (ctx) => {
     await ctx.reply(
         `🎥 Select a video:`,
         Markup.keyboard([
-            ["🎥 About TTS - Video 1"],
-            ["🎥 About TTS - Video 2"],
-            ["🎥 About TTS - Video 3"],
+            ["🎥ABOUT US🔥"],
+            ["🎥 Frequently Asking Questions"],
+            ["🎥 ADVICE and Warning"],
             ["🔙 Main Menu"]
         ])
             .resize()
@@ -149,18 +149,18 @@ bot.hears("🎥 About TTS - Video 1", async (ctx) => {
     // Replace with your real Telegram video file ID
 
     await ctx.replyWithVideo(
-        "VIDEO_FILE_ID_1",
+        "BAACAgQAAxkBAANEapNeMpVDrJnxAsBPvNUvDxEVug8AAqsgAAJI86BQAgbmkcAcsXE9BA",
         {
-            caption: "🎥 About TTS Academy"
+            caption: "🎥ABOUT US🔥"
         }
     );
 
     await ctx.reply(
         "Choose another option:",
         Markup.keyboard([
-            ["🎥 About TTS - Video 1"],
-            ["🎥 About TTS - Video 2"],
-            ["🎥 About TTS - Video 3"],
+            ["🎥ABOUT US🔥"],
+            ["🎥 Frequently Asking Questions"],
+            ["🎥 ADVICE and Warning"],
             ["🔙 Main Menu"]
         ])
             .resize()
@@ -171,18 +171,18 @@ bot.hears("🎥 About TTS - Video 1", async (ctx) => {
 bot.hears("🎥 About TTS - Video 2", async (ctx) => {
 
     await ctx.replyWithVideo(
-        "VIDEO_FILE_ID_2",
+        "BAACAgQAAxkBAANHapNguArQEkcwGL2zgus-Uar2uvQAAtYgAAJI86BQVZ0mmY-GqAE9BA",
         {
-            caption: "🎥 About TTS Academy"
+            caption: "🎥 Frequently Asking Questions"
         }
     );
 
     await ctx.reply(
         "Choose another option:",
         Markup.keyboard([
-            ["🎥 About TTS - Video 1"],
-            ["🎥 About TTS - Video 2"],
-            ["🎥 About TTS - Video 3"],
+            ["🎥ABOUT US🔥"],
+            ["🎥 Frequently Asking Questions"],
+            ["🎥 ADVICE and Warning"],
             ["🔙 Main Menu"]
         ])
             .resize()
@@ -193,18 +193,18 @@ bot.hears("🎥 About TTS - Video 2", async (ctx) => {
 bot.hears("🎥 About TTS - Video 3", async (ctx) => {
 
     await ctx.replyWithVideo(
-        "VIDEO_FILE_ID_3",
+        "BAACAgQAAxkBAANJapNhL_KoDfWXzkyxe2XKEKEGHQMAAuIgAAJI86BQC5kfkcGqYgABPQQ",
         {
-            caption: "🎥 About TTS Academy"
+            caption: "🎥 ADVICE and Warning"
         }
     );
 
     await ctx.reply(
         "Choose another option:",
         Markup.keyboard([
-            ["🎥 About TTS - Video 1"],
-            ["🎥 About TTS - Video 2"],
-            ["🎥 About TTS - Video 3"],
+            ["🎥ABOUT US🔥"],
+            ["🎥 Frequently Asking Questions"],
+            ["🎥 ADVICE and Warning"],
             ["🔙 Main Menu"]
         ])
             .resize()
