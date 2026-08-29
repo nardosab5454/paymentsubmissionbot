@@ -48,11 +48,12 @@ const freshmanCocKeyboard = Markup.keyboard([
 
 
 const aboutKeyboard = Markup.keyboard([
-    ["🎥 ABOUT US🔥"],
-    ["🎥 Frequently Asking Questions"],
-    ["🎥 ADVICE and Warning"],
+    ["🎥 About TTS - Video 1"],
+    ["🎥 About TTS - Video 2"],
+    ["🎥 About TTS - Video 3"],
     ["🔙 Main Menu"]
-]).resize();
+])
+    .resize();
 
 
 const paymentKeyboard = Markup.keyboard([
@@ -157,7 +158,7 @@ bot.hears("ℹ️ About Us", async (ctx) => {
     await ctx.reply(
         `ℹ️ ABOUT US\n\n` +
         `Learn more about TTS Academy through our videos. 🎥\n\n` +
-        `Choose a video below:`,
+        `Choose a video:`,
         aboutKeyboard
     );
 });
@@ -166,65 +167,99 @@ bot.hears("ℹ️ About Us", async (ctx) => {
 // ==================================================
 // ABOUT US VIDEOS
 // ==================================================
+// ==================================================
+// ABOUT US VIDEO 1
+// ==================================================
 
+bot.hears("🎥 About TTS - Video 1", async (ctx) => {
 
-// ------------------------------
-// VIDEO 1
-// ------------------------------
+    try {
 
-bot.hears("🎥 ABOUT US🔥", async (ctx) => {
+        await ctx.replyWithVideo(
+            "BAACAgQAAxkBAANEapNeMpVDrJnxAsBPvNUvDxEVug8AAqsgAAJI86BQAgbmkcAcsXE9BA",
+            {
+                caption: "🎥 About TTS Academy"
+            }
+        );
 
-    await ctx.replyWithVideo(
-        "BAACAgQAAxkBAANEapNeMpVDrJnxAsBPvNUvDxEVug8AAqsgAAJI86BQAgbmkcAcsXE9BA",
-        {
-            caption: "🎥 ABOUT US🔥"
-        }
-    );
+        await ctx.reply(
+            "Choose another video:",
+            aboutKeyboard
+        );
 
-    await ctx.reply(
-        `Choose another video:`,
-        aboutKeyboard
-    );
+    } catch (error) {
+
+        console.error("VIDEO 1 ERROR:", error);
+
+        await ctx.reply(
+            "❌ Sorry, I couldn't load this video right now.",
+            aboutKeyboard
+        );
+    }
 });
 
 
-// ------------------------------
-// VIDEO 2
-// ------------------------------
+// ==================================================
+// ABOUT US VIDEO 2
+// ==================================================
 
-bot.hears("🎥 Frequently Asking Questions", async (ctx) => {
+bot.hears("🎥 About TTS - Video 2", async (ctx) => {
 
-    await ctx.replyWithVideo(
-        "BAACAgQAAxkBAANHapNguArQEkcwGL2zgus-Uar2uvQAAtYgAAJI86BQVZ0mmY-GqAE9BA",
-        {
-            caption: "🎥 Frequently Asking Questions"
-        }
-    );
+    try {
 
-    await ctx.reply(
-        `Choose another video:`,
-        aboutKeyboard
-    );
+        await ctx.replyWithVideo(
+            "BAACAgQAAxkBAANHapNguArQEkcwGL2zgus-Uar2uvQAAtYgAAJI86BQVZ0mmY-GqAE9BA",
+            {
+                caption: "🎥 Frequently Asked Questions"
+            }
+        );
+
+        await ctx.reply(
+            "Choose another video:",
+            aboutKeyboard
+        );
+
+    } catch (error) {
+
+        console.error("VIDEO 2 ERROR:", error);
+
+        await ctx.reply(
+            "❌ Sorry, I couldn't load this video right now.",
+            aboutKeyboard
+        );
+    }
 });
 
 
-// ------------------------------
-// VIDEO 3
-// ------------------------------
+// ==================================================
+// ABOUT US VIDEO 3
+// ==================================================
 
-bot.hears("🎥 ADVICE and Warning", async (ctx) => {
+bot.hears("🎥 About TTS - Video 3", async (ctx) => {
 
-    await ctx.replyWithVideo(
-        "BAACAgQAAxkBAANJapNhL_KoDfWXzkyxe2XKEKEGHQMAAuIgAAJI86BQC5kfkcGqYgABPQQ",
-        {
-            caption: "🎥 ADVICE and Warning"
-        }
-    );
+    try {
 
-    await ctx.reply(
-        `Choose another video:`,
-        aboutKeyboard
-    );
+        await ctx.replyWithVideo(
+            "BAACAgQAAxkBAANJapNhL_KoDfWXzkyxe2XKEKEGHQMAAuIgAAJI86BQC5kfkcGqYgABPQQ",
+            {
+                caption: "🎥 Advice and Warning"
+            }
+        );
+
+        await ctx.reply(
+            "Choose another video:",
+            aboutKeyboard
+        );
+
+    } catch (error) {
+
+        console.error("VIDEO 3 ERROR:", error);
+
+        await ctx.reply(
+            "❌ Sorry, I couldn't load this video right now.",
+            aboutKeyboard
+        );
+    }
 });
 
 
