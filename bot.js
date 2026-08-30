@@ -69,7 +69,16 @@ const paymentKeyboard = Markup.keyboard([
 bot.start(async (ctx) => {
 
     // Clear any old registration session
-    ctx.session.registration = null;
+    bot.use(session({
+    defaultSession: () => ({
+        registration: null,
+        fullName: null,
+        university: null,
+        waitingForName: false,
+        waitingForUniversity: false,
+        waitingForPhoto: false
+    })
+}));
 
     const name = ctx.from.first_name || "there";
 
@@ -739,7 +748,17 @@ bot.on("photo", async (ctx) => {
 
 bot.hears("🔙 Main Menu", async (ctx) => {
 
+    // Reset registration data safely
+    if (!ctx.session) {
+        ctx.session = {};
+    }
+
     ctx.session.registration = null;
+    ctx.session.fullName = null;
+    ctx.session.university = null;
+    ctx.session.waitingForName = false;
+    ctx.session.waitingForUniversity = false;
+    ctx.session.waitingForPhoto = false;
 
     await ctx.reply(
         `🏠 MAIN MENU\n\n` +
@@ -755,7 +774,16 @@ bot.hears("🔙 Main Menu", async (ctx) => {
 
 bot.hears("🔙 Registration", async (ctx) => {
 
+    if (!ctx.session) {
+        ctx.session = {};
+    }
+
     ctx.session.registration = null;
+    ctx.session.fullName = null;
+    ctx.session.university = null;
+    ctx.session.waitingForName = false;
+    ctx.session.waitingForUniversity = false;
+    ctx.session.waitingForPhoto = false;
 
     await ctx.reply(
         `📝 REGISTRATION\n\n` +
