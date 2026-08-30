@@ -116,20 +116,26 @@ bot.hears("🏆 Our Golden Past Years", async (ctx) => {
         `⭐ Our students' success is our greatest achievement.`,
         mainKeyboard
     );
+    
     await ctx.reply(
         `🏆 OUR GOLDEN PAST YEARS\n\n` +
 
-        `🙏🙏 A huge thank you to the best math teacher\n\n` +
+        `Ke Mid exam yeterdanew neger ke Wollo University malet new betam kelal new.\n\n` +
 
-        `They say a good teacher explains, but a great teacher inspires. ` +
-        `Maths teacher helped me secure my A by breaking down the most ` +
-        `complex problems into simple steps.\n\n` +
+        `Ke high school bebelete neger gn betam shewaj new ena enanten lamsegnachu efelfalgalehu. Fetenawu ley yewetawun hulu astemrachunal ena deom ye enanten mid exam ysera mnm aykebdewum yegibu fetena.\n\n` +
 
-        `Thanks a lot all TTS teachers and members 🙏🙏\n\n` +
+    `May Allah bless you all course instructor 🥰🥰`,
+    mainKeyboard
+);  
+    await ctx.reply( `🏆 OUR GOLDEN PAST YEARS\n\n` + `Be mejeemerya derja fetrain eyamesegenku le tekettay 5 werat laderegachulin gulh አስተዋፅኦ kelib amsegnalehu kebadu freshman ke enantega huno kelual ena lezihm mulu teamun eyamesegenku.\n\n` + `Especially cordinetachinin, thank you 🥰 ena eskahun dires abrewun yekoyut memhranochin mulu bemulu amsegnalehu.\n\n` + `Ena yalemakoraret siasystmren yeneberwun maths instructor ena kebadun logic kelal yaderegelinini. Logic instructor betam amsegnalehi, ewdachulaehu. Psycho arif neber. Geo yetwsene bizegegym timhrtu arif new koy 😍.\n\n` + `Ersichewu engilish instructrachinim thank you. Ke exam stayl ga yemhed yehone tmhirtin astemronal endatekaley ye hulum coursoch instructor, thank youu. Much love for you 🥰🥰🥰.\n\n` + `Ena ende hasab lewdefit bitastekakilut bye yemilewu instructeroch tyake biseru, especially physic course ley harif yihon yimeslegnal. Chershalehu abrewun simareu yekoyut tamriochim lemakerbachewu commentoch lesetachugn feedback. Thank you 😍`, mainKeyboard );
+    await ctx.reply( `🏆 OUR GOLDEN PAST YEARS\n\n` + `ሰላም TTS እንዴት ናችሁ። የቲቶሪያላችሁ አባል በመሆኔ በጣም ኩራት ይሰማኛል።\n\n` + `በእውነት የሄን ቲቶሪያል በመጀመራችሁ በጣም ብዙ ተማሪ ተጠቃሚ እንደሆነ እርግጠኛ ነኝ። እኔም አንዱ የቲቶሪያላችሁ ተጠቃሚ ነኝ።\n\n` + `TTS በጣም አከብራቸዋለሁ እወዳቸዋለሁ 🙏🙏🙏\n\n` + `Attention Students! 📢\n\n` + `If you haven't already, I highly encourage you to join this channel! It's not just any educational channel; it’s the best place to enhance your knowledge and skills.\n\n` + `With engaging content, interactive sessions, and a supportive community, you won't want to miss out! ❤️📚`, mainKeyboard );
 
-        `⭐ Our students' success is our greatest achievement.`,
-        mainKeyboard
-    );
+    await ctx.reply( `🏆 OUR GOLDEN PAST YEARS\n\n` + `እኛም አንተን በአቅማችን ማገዝ ስለቻልን ትልቅ ደስታ ይሰማናል! 😊\n\n` + `ከልብ እናመሰግናለን በሁሉም ነገር። መልካም እንድሆንልህ እንመኛለን! 🥰🙏🙌\n\n` + `❤️ Much Love & Respect`, mainKeyboard );
+
+
+    
+
+
 });
 
 
