@@ -363,11 +363,7 @@ bot.hears("👨‍🎓 Freshman Alone", async (ctx) => {
     await sendPaymentDetails(
         ctx,
         "Freshman Alone",
-<<<<<<< HEAD
-        "360 ETB"
-=======
         "400 ETB"
->>>>>>> 7c39c519aa384b874939c9313f0dd24c96a3f9e5
     );
 });
 
@@ -397,11 +393,7 @@ bot.hears("💊 Medicine, Pharmacy & Dental", async (ctx) => {
     await sendPaymentDetails(
         ctx,
         "COC - Medicine, Pharmacy & Dental",
-<<<<<<< HEAD
-        "250 ETB"
-=======
         "350 ETB"
->>>>>>> 7c39c519aa384b874939c9313f0dd24c96a3f9e5
     );
 });
 
@@ -415,11 +407,7 @@ bot.hears("⚖️ Law COC", async (ctx) => {
     await sendPaymentDetails(
         ctx,
         "COC - Law",
-<<<<<<< HEAD
-        "250 ETB"
-=======
         "300 ETB"
->>>>>>> 7c39c519aa384b874939c9313f0dd24c96a3f9e5
     );
 });
 
@@ -449,11 +437,7 @@ bot.hears("🏥 Freshman + Health COC", async (ctx) => {
     await sendPaymentDetails(
         ctx,
         "Freshman + Health COC",
-<<<<<<< HEAD
-        "500 ETB"
-=======
         "700 ETB"
->>>>>>> 7c39c519aa384b874939c9313f0dd24c96a3f9e5
     );
 });
 
@@ -467,11 +451,7 @@ bot.hears("⚖️ Freshman + Law COC", async (ctx) => {
     await sendPaymentDetails(
         ctx,
         "Freshman + Law COC",
-<<<<<<< HEAD
-        "460 ETB"
-=======
         "600 ETB"
->>>>>>> 7c39c519aa384b874939c9313f0dd24c96a3f9e5
     );
 });
 
